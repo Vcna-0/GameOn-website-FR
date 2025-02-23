@@ -73,6 +73,7 @@ img {
   .topnav a.icon {
     float: right;
     display: block;
+    color: #fe142f;
   }
 }
 
@@ -97,7 +98,7 @@ img {
   .topnav a.icon {
     float: right;
     display: block;
-    margin-top: -15px;
+    color: #fe142f;
   }
 } 
 
