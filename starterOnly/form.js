@@ -40,39 +40,22 @@ const validationRules = {
     }
 };
 
-function handleValidate(event){
-   event.preventDefault();
-
-   formElements.forEach(input => {
-      console.log("input", input)
-
-      function showValidationError(input, isValid, errorMessage = "") {
-         const parent = input.parentNode;
-         parent.setAttribute("data-error-visible", !isValid);
-         parent.setAttribute("data-error", isValid ? "" : errorMessage);
-      }
-      
-      const rule = validationRules[input.name];
-      if(rule){
-         const isValid = rule.customValidation ? rule.customValidation() : rule.regex.test(input.value);
-         showValidationError(input, isValid, rule.error)
-      }
-   })
-
-//   //  DATE
-//    const birthdateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(\d{4})$/
-//    const testbirthday = birthdateRegex.test(birthdateElement.value)
-//    if(testbirthday){
-//       console.log("OK")
-//       const parent = birthdateElement.parentNode
-//       parent.setAttribute("data-error-visible", false);
-//       parent.setAttribute("data-error", "");
-//    }else{
-//       console.log("PAS OK")
-//       const parent = birthdateElement.parentNode
-//       parent.setAttribute("data-error-visible", true);
-//       parent.setAttribute("data-error", "blabla");
-//    }
-
+function setError(input, isError, errorMessage = "") {
+    const parent = input.parentNode;
+    parent.setAttribute("data-error-visible", isError);
+    parent.setAttribute("data-error", isError ? errorMessage : "");
 }
 
+function handleValidate(event) {
+    event.preventDefault();
+
+    formElements.forEach(input => {
+        const rule = validationRules[input.name];
+        if (rule) {
+            const isValid = rule.customValidation ? rule.customValidation(input.value) : rule.regex.test(input.value);
+            setError(input, !isValid, rule.error);
+        }
+    });
+}
+
+formElement.addEventListener("submit", handleValidate);
