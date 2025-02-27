@@ -92,8 +92,7 @@ img {
 }
 
 
-
- @media screen and (max-width: 540px) {
+@media screen and (max-width: 540px) {
   .topnav a {display: none;}
   .topnav a.icon {
     float: right;
@@ -521,6 +520,28 @@ footer {
     margin-top: 50px;
     text-align: center;
   }
+}
+
+/* --------------------------- */
+/* Modale confirmation */
+/* --------------------------- */
+.confirmation-message {
+    font-size: 24px;
+    color: white;
+    text-align: center;
+    margin: 50px 0;
+}
+
+.btn-close {
+    background: #fe142f;
+  display: block;
+  margin: 0 auto;
+  border-radius: 7px;
+  font-size: 1rem;
+  padding: 12px 82px;
+  color: #fff;
+  cursor: pointer;
+  border: 0;
 }
 
 @keyframes modalopen {

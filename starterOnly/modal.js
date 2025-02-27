@@ -20,10 +20,23 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-// Close modal event
-document.querySelector(".close").addEventListener("click", closeModal);
-
 // Close modal form 
 function closeModal() {
   modalbg.style.display = "none";
+}
+
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("close") || event.target.classList.contains("btn-close")) {
+    closeModal();
+  }
+});
+
+function showConfirmationModal() {
+   document.querySelector(".content").innerHTML = `
+      <button type="button" class="close" aria-label="Fermer">&times;</button>
+      <div class="modal-body">
+            <p class="confirmation-message">Merci pour votre inscription</p>
+            <button class="btn-close">Fermer</button>
+      </div>
+   `;
 }

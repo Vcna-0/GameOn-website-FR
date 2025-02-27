@@ -8,6 +8,19 @@ const locationElements = document.querySelectorAll("input[name='location']");
 const checkboxTermsElement = document.getElementById("checkbox1");
 const submitButton = document.querySelector(".btn-submit");
 const formElements = document.querySelectorAll("form[name='reserve'] input");
+const modalContent = document.querySelector(".content");
+
+function isFilledDate(value) {
+
+    const [year, month, day] = value.split("-").map(Number);
+    const date = new Date(year, month - 1, day);
+
+    return (
+        date.getFullYear() === year &&
+        date.getMonth() === month - 1 &&
+        date.getDate() === day
+    );
+}
 
 const validationRules = {
     first: {
@@ -23,7 +36,7 @@ const validationRules = {
         error: "Veuillez indiquer un email valide"
     },
     birthdate: {
-        regex: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(\d{4})$/,
+        customValidation: isFilledDate,
         error: "Vous devez entrer votre date de naissance."
     },
     quantity: {
@@ -40,7 +53,7 @@ const validationRules = {
     }
 };
 
-function setError(input, isError, errorMessage = "") {
+function setError(input, isError, errorMessage) {
     const parent = input.parentNode;
     parent.setAttribute("data-error-visible", isError);
     parent.setAttribute("data-error", isError ? errorMessage : "");
@@ -48,14 +61,24 @@ function setError(input, isError, errorMessage = "") {
 
 function handleValidate(event) {
     event.preventDefault();
+    let isFormValid = true;
 
     formElements.forEach(input => {
+       
         const rule = validationRules[input.name];
         if (rule) {
             const isValid = rule.customValidation ? rule.customValidation(input.value) : rule.regex.test(input.value);
             setError(input, !isValid, rule.error);
-        }
+
+            if (!isValid) {
+                isFormValid = false;
+            }
+        } 
     });
+    
+    if (isFormValid) {
+        showConfirmationModal();
+    }
 }
 
 formElement.addEventListener("submit", handleValidate);
