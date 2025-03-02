@@ -23,23 +23,19 @@ function isFilledDate(value) {
 }
 
 const validationRules = {
-    first: {
+    string: {
         regex: /^[A-Za-zÀ-ÖØ-öø-ÿ-]{2,}$/,
         error: "Veuillez entrer 2 caractères ou plus pour le champ du prénom."
-    },
-    last: {
-        regex: /^[A-Za-zÀ-ÖØ-öø-ÿ-]{2,}$/,
-        error: "Veuillez entrer 2 caractères ou plus pour le champ du nom."
     },
     email: {
         regex: /^[\w-]+(?:\.[\w-]+)*@(?:[\w-]+\.)*\w[\w-]{0,66}\.[a-z]{2,6}$/i,
         error: "Veuillez indiquer un email valide"
     },
-    birthdate: {
+    date: {
         customValidation: isFilledDate,
         error: "Vous devez entrer votre date de naissance."
     },
-    quantity: {
+    number: {
         regex: /^[0-9]+$/,
         error: "Veuillez entrer un nombre valide."
     },
@@ -65,7 +61,7 @@ function handleValidate(event) {
 
     formElements.forEach(input => {
        
-        const rule = validationRules[input.name];
+        const rule = validationRules[input.dataset.type];
         if (rule) {
             const isValid = rule.customValidation ? rule.customValidation(input.value) : rule.regex.test(input.value);
             setError(input, !isValid, rule.error);
