@@ -11,6 +11,7 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
+const originalFormHTML = document.querySelector(".content").innerHTML; 
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -39,4 +40,19 @@ function showConfirmationModal() {
             <button class="btn-close">Fermer</button>
       </div>
    `;
+
+    document.querySelector(".btn-close").addEventListener("click", resetForm);
+    document.querySelector(".close").addEventListener("click", resetForm);
 }
+
+function resetForm() {
+   modalContent.innerHTML = originalFormHTML; // Remet le formulaire initial
+   attachFormEvents(); // Réattacher les événements du formulaire
+}
+
+function attachFormEvents() {
+   const formElement = document.querySelector("form[name='reserve']");
+   formElement.addEventListener("submit", handleValidate);
+}
+
+attachFormEvents();

@@ -14,11 +14,13 @@ function isFilledDate(value) {
 
     const [year, month, day] = value.split("-").map(Number);
     const date = new Date(year, month - 1, day);
+    const today = new Date();
 
     return (
         date.getFullYear() === year &&
         date.getMonth() === month - 1 &&
-        date.getDate() === day
+        date.getDate() === day &&
+        date < today
     );
 }
 
@@ -69,7 +71,7 @@ function handleValidate(event) {
             if (!isValid) {
                 isFormValid = false;
             }
-        } 
+        }
     });
     
     if (isFormValid) {

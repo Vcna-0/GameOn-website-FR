@@ -208,6 +208,13 @@ input {
   font-size: 20px;
   height: 48px;
 }
+
+form{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .formData[data-error]::after {
   content: attr(data-error);
   font-size: 0.4em;
@@ -215,7 +222,7 @@ input {
   display: block;
   margin-top: 7px;
   margin-bottom: 7px;
-  text-align: right;
+  text-align: left;
   line-height: 0.3;
   opacity: 0;
   transition: 0.3s;
