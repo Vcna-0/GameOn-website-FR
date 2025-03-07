@@ -1,14 +1,7 @@
 const formElement = document.querySelector("form[name='reserve']");
-const firstNameElement = document.getElementById("first");
-const lastNameElement = document.getElementById("last");
-const emailElement = document.getElementById("email");
-const birthdateElement = document.getElementById("birthdate");
-const quantityElement = document.getElementById("quantity");
 const locationElements = document.querySelectorAll("input[name='location']");
 const checkboxTermsElement = document.getElementById("checkbox1");
-const submitButton = document.querySelector(".btn-submit");
 const formElements = document.querySelectorAll("form[name='reserve'] input");
-const modalContent = document.querySelector(".content");
 
 function isFilledDate(value) {
 

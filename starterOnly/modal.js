@@ -11,7 +11,8 @@ function editNav() {
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
-const originalFormHTML = document.querySelector(".content").innerHTML; 
+const originalFormHTML = document.querySelector(".content").innerHTML;
+const modalContent = document.querySelector(".content");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -26,6 +27,11 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
+function resetForm() {
+   modalContent.innerHTML = originalFormHTML;
+   attachFormEvents(); 
+}
+
 document.addEventListener("click", function (event) {
   if (event.target.classList.contains("close") || event.target.classList.contains("btn-close")) {
     closeModal();
@@ -33,7 +39,7 @@ document.addEventListener("click", function (event) {
 });
 
 function showConfirmationModal() {
-   document.querySelector(".content").innerHTML = `
+   modalContent.innerHTML = `
       <button type="button" class="close" aria-label="Fermer">&times;</button>
       <div class="modal-body">
             <p class="confirmation-message">Merci pour votre inscription</p>
@@ -45,10 +51,6 @@ function showConfirmationModal() {
     document.querySelector(".close").addEventListener("click", resetForm);
 }
 
-function resetForm() {
-   modalContent.innerHTML = originalFormHTML; // Remet le formulaire initial
-   attachFormEvents(); // Réattacher les événements du formulaire
-}
 
 function attachFormEvents() {
    const formElement = document.querySelector("form[name='reserve']");
