@@ -54,7 +54,7 @@ function setError(input, isError, errorMessage) {
 function validateInput(input) {
     const rule = validationRules[input.dataset.type];
     if (!rule) {
-        return true;
+        return true; 
     }
     
     const isValid = rule.customValidation ? rule.customValidation(input.value) : rule.regex.test(input.value);
@@ -80,6 +80,7 @@ export function handleValidate(event) {
         showConfirmationModal();
     }
 }
+
 
 formElements.forEach(input => {
     input.addEventListener('input', handleRealTimeValidation);
