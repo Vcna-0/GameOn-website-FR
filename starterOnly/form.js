@@ -1,11 +1,9 @@
 import { showConfirmationModal } from './modal.js';
 const formElement = document.querySelector("form[name='reserve']");
-const locationElements = document.querySelectorAll("input[name='location']");
-const checkboxTermsElement = document.getElementById("checkbox1");
 const formElements = document.querySelectorAll("form[name='reserve'] input");
 
-function isFilledDate(value) {
-
+function isFilledDate(input) {
+    const {value} = input;
     const [year, month, day] = value.split("-").map(Number);
     const date = new Date(year, month - 1, day);
     const today = new Date();
@@ -36,11 +34,14 @@ const validationRules = {
         error: "Veuillez entrer un nombre valide."
     },
     location: {
-        customValidation: () => Array.from(locationElements).some(el => el.checked),
+        customValidation: () => {
+            const locationInputs = document.querySelectorAll("input[name='location']");
+            return Array.from(locationInputs).some(input => input.checked);
+        },
         error: "Vous devez choisir une option."
     },
-    checkbox1: {
-        customValidation: () => checkboxTermsElement.checked,
+    checkbox1: { 
+        customValidation: (input) => input.checked,
         error: "Vous devez accepter les termes et conditions."
     }
 };
@@ -52,21 +53,31 @@ function setError(input, isError, errorMessage) {
 }
 
 function validateInput(input) {
+    if (input.type === "radio") {
+            console.log(input.checked, "input radio")
+
+    } else if (input.type === "checkbox") {
+        console.log(input.checked, "input checkbox")
+    } else {
+        console.log(input.value, "input")
+    }
     const rule = validationRules[input.dataset.type];
     if (!rule) {
         return true;
     }
     
-    const isValid = rule.customValidation ? rule.customValidation(input.value) : rule.regex.test(input.value);
+    const isValid = rule.customValidation ? rule.customValidation(input) : rule.regex.test(input.value);
     setError(input, !isValid, rule.error);
     return isValid;
 }
 
-function handleRealTimeValidation(event) {
+export function handleRealTimeValidation(event) {
     validateInput(event.target);
 }
 
 export function handleValidate(event) {
+    console.log("test")
+    console.log(event, "form submitted");
     event.preventDefault();
     let isFormValid = true;
 
@@ -75,10 +86,10 @@ export function handleValidate(event) {
             isFormValid = false;
         }
     });
-    
+    console.log(isFormValid, "isFormValid");
     if (isFormValid) {
         showConfirmationModal();
-    }
+    } 
 }
 
 formElements.forEach(input => {
@@ -87,3 +98,8 @@ formElements.forEach(input => {
 
 
 formElement.addEventListener("submit", handleValidate);
+
+//TEST
+formElements.forEach(input => {
+   console.log(input, "each input form")
+});

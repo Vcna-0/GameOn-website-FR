@@ -1,4 +1,4 @@
-import { handleValidate } from './form.js';
+import { handleValidate, handleRealTimeValidation } from './form.js';
 
 function editNav() {
   var x = document.getElementById("myTopnav");
@@ -15,48 +15,39 @@ const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const originalFormHTML = document.querySelector(".content").innerHTML;
 const modalContent = document.querySelector(".content");
+const form = document.querySelector("form[name='reserve']");
+const modalSuccess = document.querySelector(".modal-success");
+const modalSuccessButtonsClose = document.querySelectorAll(".close-success-modal");
+const formButtonClose = document.querySelector(".close-form-modal");
 
-// launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 // launch modal form
 function launchModal() {
+  closeModal("modalSuccess");
   modalbg.style.display = "block";
+  modalContent.style.display = "block";
 }
 
 // Close modal form 
-function closeModal() {
-  modalbg.style.display = "none";
-}
-
-function resetForm() {
-   modalContent.innerHTML = originalFormHTML;
-   attachFormEvents(); 
-}
-
-document.addEventListener("click", function (event) {
-  if (event.target.classList.contains("close") || event.target.classList.contains("btn-close")) {
-    closeModal();
+function closeModal(modalType) {
+  console.log(modalType, "modalType")
+  if (modalType === "form") {
+    modalContent.style.display = "none";
+    modalbg.style.display = "none";
+  } else if (modalType === "formOnly") {
+    modalContent.style.display = "none";
+  } else if (modalType === "modalSuccess") {
+    modalSuccess.style.display = "none";
+    modalbg.style.display = "none";
+    form.reset();
   }
-});
+}
+
+formButtonClose.addEventListener("click", () => closeModal("form")); 
+modalSuccessButtonsClose.forEach((btn) => btn.addEventListener("click", () => closeModal("modalSuccess")));
 
 export function showConfirmationModal() {
-   modalContent.innerHTML = `
-      <button type="button" class="close" aria-label="Fermer">&times;</button>
-      <div class="modal-body">
-            <p class="confirmation-message">Merci pour votre inscription</p>
-            <button class="btn-close">Fermer</button>
-      </div>
-   `;
-
-    document.querySelector(".btn-close").addEventListener("click", resetForm);
-    document.querySelector(".close").addEventListener("click", resetForm);
+  closeModal("formOnly");
+  modalSuccess.style.display = "block";
 }
-
-
-function attachFormEvents() {
-   const formElement = document.querySelector("form[name='reserve']");
-   formElement.addEventListener("submit", handleValidate);
-}
-
-attachFormEvents();
