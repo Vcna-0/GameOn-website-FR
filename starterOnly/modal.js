@@ -12,8 +12,6 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
-const originalFormHTML = document.querySelector(".content").innerHTML;
 const modalContent = document.querySelector(".content");
 const form = document.querySelector("form[name='reserve']");
 const modalSuccess = document.querySelector(".modal-success");
@@ -29,9 +27,8 @@ function launchModal() {
   modalContent.style.display = "block";
 }
 
-// Close modal form 
+// Close form and success modal 
 function closeModal(modalType) {
-  console.log(modalType, "modalType")
   if (modalType === "form") {
     modalContent.style.display = "none";
     modalbg.style.display = "none";

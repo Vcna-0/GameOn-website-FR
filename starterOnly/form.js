@@ -53,14 +53,6 @@ function setError(input, isError, errorMessage) {
 }
 
 function validateInput(input) {
-    if (input.type === "radio") {
-            console.log(input.checked, "input radio")
-
-    } else if (input.type === "checkbox") {
-        console.log(input.checked, "input checkbox")
-    } else {
-        console.log(input.value, "input")
-    }
     const rule = validationRules[input.dataset.type];
     if (!rule) {
         return true;
@@ -76,8 +68,6 @@ export function handleRealTimeValidation(event) {
 }
 
 export function handleValidate(event) {
-    console.log("test")
-    console.log(event, "form submitted");
     event.preventDefault();
     let isFormValid = true;
 
@@ -86,7 +76,6 @@ export function handleValidate(event) {
             isFormValid = false;
         }
     });
-    console.log(isFormValid, "isFormValid");
     if (isFormValid) {
         showConfirmationModal();
     } 
@@ -96,10 +85,4 @@ formElements.forEach(input => {
     input.addEventListener('input', handleRealTimeValidation);
 });
 
-
 formElement.addEventListener("submit", handleValidate);
-
-//TEST
-formElements.forEach(input => {
-   console.log(input, "each input form")
-});
