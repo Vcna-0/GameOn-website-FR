@@ -1,7 +1,8 @@
-import { showConfirmationModal } from './modal.js';
+import { openModal } from './modal.js';
 const formElement = document.querySelector("form[name='reserve']");
 const formElements = document.querySelectorAll("form[name='reserve'] input");
 
+// Verify if the date is filled and is a valid date
 function isFilledDate(input) {
     const {value} = input;
     const [year, month, day] = value.split("-").map(Number);
@@ -16,6 +17,7 @@ function isFilledDate(input) {
     );
 }
 
+// Validation rules
 const validationRules = {
     string: {
         regex: /^[A-Za-zÀ-ÖØ-öø-ÿ-]{2,}$/,
@@ -46,12 +48,15 @@ const validationRules = {
     }
 };
 
+// Set error message
 function setError(input, isError, errorMessage) {
     const parent = input.parentNode;
     parent.setAttribute("data-error-visible", isError);
     parent.setAttribute("data-error", isError ? errorMessage : "");
 }
 
+
+// Validate input
 function validateInput(input) {
     const rule = validationRules[input.dataset.type];
     if (!rule) {
@@ -63,10 +68,13 @@ function validateInput(input) {
     return isValid;
 }
 
+
+// Real-time validation
 export function handleRealTimeValidation(event) {
     validateInput(event.target);
 }
 
+// Validate all form
 export function handleValidate(event) {
     event.preventDefault();
     let isFormValid = true;
@@ -77,10 +85,12 @@ export function handleValidate(event) {
         }
     });
     if (isFormValid) {
-        showConfirmationModal();
+        openModal("modalSuccess");
     } 
 }
 
+
+// Event listeners
 formElements.forEach(input => {
     input.addEventListener('input', handleRealTimeValidation);
 });

@@ -1,14 +1,5 @@
 import { handleValidate, handleRealTimeValidation } from './form.js';
 
-function editNav() {
-  var x = document.getElementById("myTopnav");
-  if (x.className === "topnav") {
-    x.className += " responsive";
-  } else {
-    x.className = "topnav";
-  }
-}
-
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
@@ -18,13 +9,27 @@ const modalSuccess = document.querySelector(".modal-success");
 const modalSuccessButtonsClose = document.querySelectorAll(".close-success-modal");
 const formButtonClose = document.querySelector(".close-form-modal");
 
-modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
+function editNav() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
 
-// launch modal form
-function launchModal() {
-  closeModal("modalSuccess");
-  modalbg.style.display = "block";
-  modalContent.style.display = "block";
+modalBtn.forEach((btn) => btn.addEventListener("click", () => openModal("form")));
+
+// Open form and success modal
+export function openModal(modalType) {
+  if (modalType === "form") {
+    closeModal("modalSuccess"); 
+    modalbg.style.display = "block";
+    modalContent.style.display = "block";
+  } else if (modalType === "modalSuccess") {
+    closeModal("formOnly"); 
+    modalSuccess.style.display = "block";
+  }
 }
 
 // Close form and success modal 
@@ -41,10 +46,7 @@ function closeModal(modalType) {
   }
 }
 
+// Event listeners
 formButtonClose.addEventListener("click", () => closeModal("form")); 
 modalSuccessButtonsClose.forEach((btn) => btn.addEventListener("click", () => closeModal("modalSuccess")));
 
-export function showConfirmationModal() {
-  closeModal("formOnly");
-  modalSuccess.style.display = "block";
-}
