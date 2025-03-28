@@ -20,7 +20,7 @@ function isFilledDate(input) {
 // Validation rules
 const validationRules = {
     string: {
-        regex: /^[A-Za-zÀ-ÖØ-öø-ÿ-]{2,}$/,
+        regex: /^.{2,}$/,
         error: "Veuillez entrer 2 caractères ou plus pour le champ du nom."
     },
     email: {
